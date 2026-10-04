@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model SiteSettings {
+  id                   Int      @id @default(1)
+  name                 String
+  role                 String
+  tagline              String
+  bio                  String
+  email                String
+  phone                String?
+  location             String
+  address              String?
+  resumeUrl            String?
+  githubUrl            String?
+  linkedinUrl          String?
+  twitterUrl           String?
+  logoUrl              String?
+  statProjects         String   @default("6")
+  statCollaborations   String   @default("Multiple")
+  statYears            String   @default("9+")
+  updatedAt            DateTime @updatedAt
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  description String
+  details     String?
+  imageUrl    String?
+  tech        String
+  category    String
+  liveUrl     String?
+  githubUrl   String?
+  featured    Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  name      String
+  category  String
+  icon      String?
+  sortOrder Int      @default(0)
+}
+
+model Experience {
+  id        Int      @id @default(autoincrement())
+  company   String
+  role      String
+  startDate String
+  endDate   String?
+  location  String?
+  summary   String
+  sortOrder Int      @default(0)
+}
+
+model Education {
+  id          Int      @id @default(autoincrement())
+  institution String
+  degree      String
+  startDate   String
+  endDate     String?
+  location    String?
+  sortOrder   Int      @default(0)
+}
+
+model Service {
+  id        Int      @id @default(autoincrement())
+  title     String
+  summary   String
+  icon      String?
+  sortOrder Int      @default(0)
+}
+
+model Testimonial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String
+  quote     String
+  avatarUrl String?
+  sortOrder Int      @default(0)
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  project   String?
+  budget    String?
+  message   String
+  status    String   @default("unread")
+  createdAt DateTime @default(now())
+}
