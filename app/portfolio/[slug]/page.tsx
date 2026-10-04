@@ -90,7 +90,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                     href={project.liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full bg-white px-5 py-3 text-xs font-semibold text-black"
+                    className="cst-black-text rounded-full bg-white px-5 py-3 text-xs font-semibold text-black"
                   >
                     Live site <ArrowUpRight className="inline" size={13} />
                   </a>
