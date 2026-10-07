@@ -15,7 +15,7 @@ export function Navbar({
   const [open, setOpen] = useState(false);
   const links = [
     { href: "/#about", label: "About" },
-    { href: "/portfolio", label: "Work" },
+    { href: "/portfolio", label: "Portfolio" },
     { href: "/#experience", label: "Experience" },
     { href: "/#contact", label: "Contact" },
   ];
@@ -45,12 +45,12 @@ export function Navbar({
           ))}
         </nav>
 
-        <Link
+        {/* <Link
           href="/admin"
           className="hidden items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[.16em] text-white/65 transition hover:border-white/25 hover:text-white md:flex"
         >
           Admin <ArrowUpRight size={13} />
-        </Link>
+        </Link> */}
 
         <button
           onClick={() => setOpen(!open)}

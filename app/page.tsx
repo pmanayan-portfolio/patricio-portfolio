@@ -79,7 +79,7 @@ export default async function Home() {
                     href="/portfolio"
                     className="cst-black-text rounded-full bg-white px-6 py-3 text-xs font-semibold uppercase tracking-[.16em] text-black transition hover:scale-105"
                   >
-                    View work
+                    View All Projects
                   </Link>
                   {/* {s.resumeUrl && (
                     <a
@@ -198,6 +198,14 @@ export default async function Home() {
             {projects.slice(0, 4).map((project, i) => (
               <ProjectCard key={project.id} project={project} index={i} />
             ))}
+          </div>
+          <div className="mt-10 flex justify-center">
+            <Link
+              href="/portfolio"
+              className="cst-black-text rounded-full bg-white px-6 py-3 text-xs font-semibold uppercase tracking-[.16em] text-black transition hover:scale-105"
+            >
+              View All Projects
+            </Link>
           </div>
         </div>
       </section>
@@ -381,9 +389,9 @@ export default async function Home() {
             © {new Date().getFullYear()} {s.name}. Built with intention.
           </span>
           <div className="flex gap-5">
-            <a href={s.githubUrl || "#"}>GitHub</a>
-            <a href={s.linkedinUrl || "#"}>LinkedIn</a>
-            {s.resumeUrl && <a href={s.resumeUrl}>Resume</a>}
+            {/* <a href={s.githubUrl || "#"}>GitHub</a> */}
+            <a target="_blank" href={s.linkedinUrl || "#"}>LinkedIn</a>
+            {s.resumeUrl && <a target="_blank" href={s.resumeUrl}>Resume</a>}
             <a href={s.email ? `mailto:${s.email}` : "#"}>Email</a>
           </div>
         </div>
