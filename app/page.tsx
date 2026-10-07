@@ -50,7 +50,7 @@ export default async function Home() {
     [s.statYears, "Years"],
   ] as const;
 
-  const skillCategories = ["Frontend", "WordPress", "Web & QA", "Tools & Strengths"];
+  const skillCategories = ["Frontend", "WordPress", "Backend", "Tools & Strengths"];
 
   return (
     <main>
