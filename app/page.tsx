@@ -1,17 +1,18 @@
-import Link from "next/link";
+import { SectionLink } from "@/components/section-link";
 import { ArrowDown, ArrowUpRight, Code2, Globe2, Gauge, Layers3 } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { Reveal, ScaleIn } from "@/components/motion";
-import { ProjectCard } from "@/components/project-card";
+import { PortfolioFilter } from "@/components/portfolio-filter";
+import { groupSkills } from "@/lib/skills";
 
 export const dynamic = "force-dynamic";
 
 const defaultSettings = {
   id: 1,
   name: "Patricio Manayan Jr.",
-  role: "Web Developer | Front-End Developer",
+  role: "Web Developer | Front-End Developer | Backend Developer",
   tagline: "Building responsive, polished websites with strong front-end implementation, WordPress expertise, and careful QA.",
-  bio: "Web Developer and Front-End Developer with professional experience building and maintaining responsive websites using WordPress, Divi, Elementor, HTML, CSS, JavaScript, jQuery, PHP, and MySQL.",
+  bio: "Web Developer and Front-End Developer | Backend Developer with professional experience building and maintaining responsive websites using WordPress, Divi, Elementor, HTML, CSS, JavaScript, jQuery, PHP, and MySQL.",
   email: "all.pmanayan@gmail.com",
   location: "Argao, Cebu, Philippines",
   resumeUrl: "/resume.pdf",
@@ -50,7 +51,7 @@ export default async function Home() {
     [s.statYears, "Years"],
   ] as const;
 
-  const skillCategories = ["Frontend", "WordPress", "Backend", "Tools & Strengths"];
+  const skillGroups = groupSkills(skills);
 
   return (
     <main>
@@ -64,9 +65,9 @@ export default async function Home() {
             </Reveal>
             <Reveal delay={0.08}>
               <h1 className="text-[clamp(4rem,11vw,9.8rem)] font-medium leading-[.82] tracking-[-.065em]">
-                Patricio
+                Digital
                 <br />
-                <span className="gold-text">Manayan Jr.</span>
+                <span className="gold-text">craft.</span>
               </h1>
             </Reveal>
             <div className="mt-9 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
@@ -75,12 +76,12 @@ export default async function Home() {
               </Reveal>
               <Reveal delay={0.22}>
                 <div className="flex gap-3">
-                  <Link
-                    href="/portfolio"
+                  <SectionLink
+                    href="/#portfolio"
                     className="cst-black-text rounded-full bg-white px-6 py-3 text-xs font-semibold uppercase tracking-[.16em] text-black transition hover:scale-105"
                   >
                     View All Projects
-                  </Link>
+                  </SectionLink>
                   {/* {s.resumeUrl && (
                     <a
                       href={s.resumeUrl}
@@ -91,23 +92,23 @@ export default async function Home() {
                       Resume
                     </a>
                   )} */}
-                  <a
+                  <SectionLink
                     href="#contact"
                     className="rounded-full border border-white/15 px-6 py-3 text-xs font-semibold uppercase tracking-[.16em] text-white/75 transition hover:border-white/30 hover:text-white"
                   >
                     Start a project
-                  </a>
+                  </SectionLink>
                 </div>
               </Reveal>
             </div>
           </div>
         </div>
-        <a
+        <SectionLink
           href="#about"
           className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 items-center gap-2 text-[10px] uppercase tracking-[.25em] text-white/35 md:flex"
         >
           Scroll <ArrowDown size={12} />
-        </a>
+        </SectionLink>
       </section>
 
       <section id="about" className="section-space">
@@ -178,35 +179,18 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="section-space">
+      <section id="portfolio" className="section-space">
         <div className="container-shell">
           <Reveal>
-            <div className="mb-10 flex items-end justify-between">
-              <div>
-                <p className="eyebrow mb-4">03 — Selected work</p>
-                <h2 className="text-4xl tracking-[-.04em] md:text-5xl">A few things I’ve shipped.</h2>
-              </div>
-              <Link
-                href="/portfolio"
-                className="hidden items-center gap-2 text-sm text-white/55 transition hover:text-white md:flex"
-              >
-                All projects <ArrowUpRight size={15} />
-              </Link>
+            <div className="mb-10">
+              <p className="eyebrow mb-4">03 — Portfolio</p>
+              <h2 className="text-4xl tracking-[-.04em] md:text-5xl">Ideas brought to life.</h2>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/50">
+                Explore my work by category. Open a project for its full story, technology stack, and the work behind it.
+              </p>
             </div>
           </Reveal>
-          <div className="grid gap-6 md:grid-cols-2">
-            {projects.slice(0, 4).map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
-            ))}
-          </div>
-          <div className="mt-10 flex justify-center">
-            <Link
-              href="/portfolio"
-              className="cst-black-text rounded-full bg-white px-6 py-3 text-xs font-semibold uppercase tracking-[.16em] text-black transition hover:scale-105"
-            >
-              View All Projects
-            </Link>
-          </div>
+          <PortfolioFilter projects={projects.map(({ slug, title, description, tech, category, imageUrl }) => ({ slug, title, description, tech, category, imageUrl }))} />
         </div>
       </section>
 
@@ -264,7 +248,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="section-space">
+      <section id="skills" className="section-space">
         <div className="container-shell">
           <Reveal>
             <div className="mb-10">
@@ -273,14 +257,12 @@ export default async function Home() {
             </div>
           </Reveal>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {skillCategories.map((category) => (
+            {skillGroups.map(({ category, skills: categorySkills }) => (
               <Reveal key={category}>
                 <div className="glass rounded-[22px] p-5">
                   <div className="text-xs uppercase tracking-[.16em] text-white/35">{category}</div>
                   <div className="mt-5 space-y-3">
-                    {skills
-                      .filter((skill) => skill.category === category)
-                      .map((skill) => (
+                    {categorySkills.map((skill) => (
                         <div
                           key={skill.id}
                           className="flex items-center justify-between border-b border-white/5 pb-3 text-sm"

@@ -1,5 +1,6 @@
 "use server";
 
+import { parseTechnologies } from "@/lib/portfolio";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
@@ -79,7 +80,7 @@ export async function saveProject(formData: FormData) {
     description: String(formData.get("description") || ""),
     details: String(formData.get("details") || "") || null,
     imageUrl,
-    tech: String(formData.get("tech") || ""),
+    tech: parseTechnologies(String(formData.get("tech") || "")).join(", "),
     category: String(formData.get("category") || ""),
     liveUrl: String(formData.get("liveUrl") || "") || null,
     githubUrl: String(formData.get("githubUrl") || "") || null,
@@ -145,27 +146,6 @@ export async function markMessage(formData: FormData) {
     where: { id: Number(formData.get("id")) },
     data: { status: String(formData.get("status") || "read") },
   });
-  revalidatePath("/admin");
-}
-
-export async function saveSkill(formData: FormData) {
-  await requireAdmin();
-  const id = Number(formData.get("id") || 0);
-  const data = {
-    name: String(formData.get("name") || ""),
-    category: String(formData.get("category") || ""),
-    icon: String(formData.get("icon") || "") || null,
-    sortOrder: Number(formData.get("sortOrder") || 0),
-  };
-  if (id) await prisma.skill.update({ where: { id }, data });
-  else await prisma.skill.create({ data });
-  revalidatePath("/");
-  revalidatePath("/admin");
-}
-export async function deleteSkill(formData: FormData) {
-  await requireAdmin();
-  await prisma.skill.delete({ where: { id: Number(formData.get("id")) } });
-  revalidatePath("/");
   revalidatePath("/admin");
 }
 

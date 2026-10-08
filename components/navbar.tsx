@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { SectionLink } from "@/components/section-link";
 import { useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,7 +16,7 @@ export function Navbar({
   const [open, setOpen] = useState(false);
   const links = [
     { href: "/#about", label: "About" },
-    { href: "/portfolio", label: "Portfolio" },
+    { href: "/#portfolio", label: "Portfolio" },
     { href: "/#experience", label: "Experience" },
     { href: "/#contact", label: "Contact" },
   ];
@@ -39,9 +40,9 @@ export function Navbar({
 
         <nav className="hidden items-center gap-8 text-sm text-white/60 md:flex">
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className="transition hover:text-white">
+            <SectionLink key={link.href} href={link.href} className="transition hover:text-white">
               {link.label}
-            </Link>
+            </SectionLink>
           ))}
         </nav>
 
@@ -71,14 +72,14 @@ export function Navbar({
           >
             <nav className="container-shell flex flex-col py-5">
               {links.map((link) => (
-                <Link
+                <SectionLink
                   key={link.href}
                   onClick={() => setOpen(false)}
                   href={link.href}
                   className="border-b border-white/5 py-4 text-sm text-white/75"
                 >
                   {link.label}
-                </Link>
+                </SectionLink>
               ))}
             </nav>
           </motion.div>

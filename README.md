@@ -1,105 +1,65 @@
 # Patricio — Full Stack Developer Portfolio
 
-A premium, animated Next.js portfolio with a Prisma-backed content studio/admin dashboard.
+An animated Next.js portfolio with a Prisma-backed admin dashboard.
+
+## Updating your existing project
+
+Read **UPDATE-GUIDE.md** first. This update does not change the database schema. Keep your existing environment settings and database; do not reset or reseed them.
 
 ## Stack
 
-- Next.js 15 (App Router)
-- React 19 + TypeScript
-- Tailwind CSS 4
-- Framer Motion
-- Prisma + SQLite (easy to migrate to PostgreSQL)
-- JOSE session cookie for the admin area
+- Next.js 15 (App Router), React 19, TypeScript
+- Tailwind CSS 4 and Framer Motion
+- Prisma 6 with PostgreSQL (Supabase in the existing deployment)
+- JOSE session cookies for admin authentication
+- Vercel Blob for production uploads; local uploads during development
 
-## First run
+## New installation only
 
-Make sure Node.js 20+ is installed.
+Use Node.js 20 or later. Create `.env` from `.env.example` and fill in your PostgreSQL connection strings and admin credentials.
 
 ```bash
-npm install
-copy .env.example .env.local
+npm ci
 npm run db:generate
 npm run db:push
 npm run db:seed
 npm run dev
 ```
 
-On macOS/Linux, replace the `copy` command with:
+Run the seed only on a fresh database: it deletes and replaces portfolio collections with starter content. Existing projects do not need it.
+
+## Public portfolio
+
+- `/`: the complete homepage, including all projects, category filters, and project/technology search.
+- `/#portfolio`: jump directly to the project collection.
+- `/portfolio`: redirects to `/#portfolio` for existing bookmarks.
+- `/portfolio/[slug]`: each project's existing detail page, including overview, image, technologies, and external links.
+- `/#skills`: the toolkit, grouped automatically from saved skill categories. Empty categories are not displayed.
+
+Project cards and detail pages display all technologies. In the project editor, enter technologies separated by commas or new lines; a tag preview displays the resulting list. Empty values and duplicate names are removed. Project details preserve paragraph breaks.
+
+## Content management
+
+- `/admin`: site settings, projects, services, experience, education, testimonials, and messages.
+- `/admin/skills`: category overview and links to individual skill workspaces.
+- Choose a skill category to add, edit, move, reorder, or delete its skills. Open a skill row to edit it.
+- To create a category, add its first skill and type the new category name.
+- To move a skill, change its category in the edit form.
+- To rename a category, open **Rename category** in its workspace.
+- Display order controls skills inside each group; lower values appear first. Categories follow their first skill in the overall sort order.
+- Categories containing no skills disappear automatically; no separate empty category records are stored.
+
+The same grouping rules are used by the admin and public toolkit. Existing spelling and whitespace variations are grouped without requiring a migration.
+
+## Environment and uploads
+
+Keep `.env` private. Prisma CLI reads `.env`; Next.js can also read `.env.local`. Preserve the database URLs, admin credentials, session secret, and any existing Blob settings during an update.
+
+Production image uploads use Vercel Blob; local uploads fall back to `public/uploads`. Keep existing local upload files when copying this update. See **DEPLOYMENT.md** for new deployment setup.
+
+## Checks
 
 ```bash
-cp .env.example .env.local
+npm run typecheck
+npm run build
 ```
-
-Then open:
-
-- http://localhost:3000
-- http://localhost:3000/portfolio
-- http://localhost:3000/admin
-
-Use the `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `SESSION_SECRET` values in `.env.local` to sign in.
-
-## Why `npm install` comes first
-
-`prisma` and `tsx` are installed as project dependencies. Running `npm run db:push` before `npm install` produces errors such as `prisma is not recognized` / `prisma: not found`.
-
-## Database reset during development
-
-SQLite stores the development database at `prisma/dev.db` because the Prisma URL is `file:./dev.db`.
-
-To start with a fresh database, delete `prisma/dev.db`, then run:
-
-```bash
-npm run db:push
-npm run db:seed
-```
-
-## Editing content
-
-The admin dashboard is intentionally data-driven. Projects, skills, experience, services, testimonials, site settings, and contact messages are stored in Prisma, so the public site reads from the database instead of hard-coded content.
-
-For production, move SQLite to PostgreSQL, set a long random `SESSION_SECRET`, and put the site behind HTTPS.
-
-
-## Environment files
-Prisma CLI commands (`db:generate`, `db:push`, and `db:seed`) read `.env`. Next.js can read `.env.local` for the app, but `.env.local` is not automatically loaded by the Prisma CLI. This project therefore includes a `.env` file for local Prisma commands. Update `DATABASE_URL`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` there before seeding.
-
-
-## Resume data
-
-This version is preloaded with the content from Patricio Manayan Jr.'s supplied resume: professional experience, technical skills, core strengths, education, project links, and contact details. The supplied PDF is also copied to `public/resume.pdf` and linked from the site. Character references are intentionally not published on the public portfolio.
-
-After replacing the starter project, rebuild the database with:
-
-```powershell
-npm run db:generate
-npx prisma db push --force-reset
-npm run db:seed
-```
-
-The `--force-reset` step is important when upgrading an existing local SQLite database so the new Education and contact fields are created and the resume seed content replaces the previous demo content.
-
-
-## Image and logo uploads
-
-The admin dashboard now supports direct image uploads:
-
-- **Projects:** open `/admin`, choose a project image from your computer, preview it, then save. You can replace or remove it later.
-- **Brand logo:** under **Site settings**, upload a logo. The navigation uses the uploaded logo automatically and falls back to the text name when no logo is set.
-- Accepted formats: **JPG, PNG, WebP, AVIF**
-- Maximum file size: **5 MB**
-- Uploaded files are stored under `public/uploads/projects` and `public/uploads/branding`.
-
-If you are updating an older copy of this project, run:
-
-```bash
-npm install
-npm run db:generate
-npm run db:push
-npm run dev
-```
-
-`db:push` adds the new `logoUrl` field to the local database without requiring a database reset.
-
-### Production note
-
-The built-in uploader writes files to the local `public/uploads` directory, which is ideal for local development and traditional/self-hosted Node deployments. If you later deploy to a serverless platform with ephemeral storage, replace the storage helper in `lib/uploads.ts` with Cloudflare R2, AWS S3, or another persistent object-storage provider. The database can continue storing the resulting image URL.

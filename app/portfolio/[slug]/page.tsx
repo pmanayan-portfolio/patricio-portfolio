@@ -1,3 +1,4 @@
+import { parseTechnologies } from "@/lib/portfolio";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
@@ -16,7 +17,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <section className="section-space pb-14">
         <div className="container-shell">
           <Link
-            href="/portfolio"
+            href="/#portfolio"
             className="mb-12 inline-flex items-center gap-2 text-xs uppercase tracking-[.16em] text-white/40 hover:text-white"
           >
             <ArrowLeft size={14} /> Back to work
@@ -61,7 +62,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <div className="container-shell grid gap-12 md:grid-cols-[1fr_.55fr]">
           <Reveal>
             <p className="eyebrow mb-4">Overview</p>
-            <p className="max-w-2xl text-base leading-8 text-white/55">
+            <p className="max-w-2xl whitespace-pre-wrap text-base leading-8 text-white/55">
               {project.details || project.description}
             </p>
           </Reveal>
@@ -73,10 +74,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   Technology
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {project.tech.split(",").map((technology) => (
+                  {parseTechnologies(project.tech).map((technology) => (
                     <span
                       key={technology}
-                      className="rounded-full border border-white/10 px-3 py-2 text-xs text-white/55"
+                      className="max-w-full break-words rounded-full border border-white/10 px-3 py-2 text-xs text-white/55"
                     >
                       {technology.trim()}
                     </span>

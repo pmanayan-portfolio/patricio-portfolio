@@ -4,8 +4,8 @@ import { Navbar } from "@/components/navbar";
 import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
-  title: "Patricio Manayan Jr. — Web Developer | Front-End Developer",
-  description: "Portfolio for Patricio Manayan Jr., Web Developer and Front-End Developer.",
+  title: "Patricio Manayan Jr. — Web Developer | Front-End Developer | Backend Developer",
+  description: "Portfolio for Patricio Manayan Jr., Web Developer and Front-End Developer | Backend Developer.",
 };
 
 export const dynamic = "force-dynamic";
@@ -17,7 +17,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   });
 
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body>
         <Navbar brandName={settings?.name || "Patricio Manayan Jr."} logoUrl={settings?.logoUrl} />
         {children}

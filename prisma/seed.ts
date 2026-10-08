@@ -18,9 +18,9 @@ async function main() {
     where: { id: 1 },
     update: {
       name: "Patricio Manayan Jr.",
-      role: "Web Developer | Front-End Developer",
+      role: "Web Developer | Front-End Developer | Backend Developer",
       tagline: "Building responsive, polished websites with strong front-end implementation, WordPress expertise, and careful QA.",
-      bio: "Web Developer and Front-End Developer with professional experience building and maintaining responsive websites using WordPress, Divi, Elementor, HTML, CSS, JavaScript, jQuery, PHP, and MySQL. Experienced in reusable front-end components, responsive troubleshooting, accessibility, page speed, Core Web Vitals, QA, website customization, and client collaboration.",
+      bio: "Web Developer and Front-End Developer | Backend Developer with professional experience building and maintaining responsive websites using WordPress, Divi, Elementor, HTML, CSS, JavaScript, jQuery, PHP, and MySQL. Experienced in reusable front-end components, responsive troubleshooting, accessibility, page speed, Core Web Vitals, QA, website customization, and client collaboration.",
       email: "all.pmanayan@gmail.com",
       phone: "0949-870-5440",
       location: "Argao, Cebu, Philippines",
@@ -36,9 +36,9 @@ async function main() {
     create: {
       id: 1,
       name: "Patricio Manayan Jr.",
-      role: "Web Developer | Front-End Developer",
+      role: "Web Developer | Front-End Developer | Backend Developer",
       tagline: "Building responsive, polished websites with strong front-end implementation, WordPress expertise, and careful QA.",
-      bio: "Web Developer and Front-End Developer with professional experience building and maintaining responsive websites using WordPress, Divi, Elementor, HTML, CSS, JavaScript, jQuery, PHP, and MySQL. Experienced in reusable front-end components, responsive troubleshooting, accessibility, page speed, Core Web Vitals, QA, website customization, and client collaboration.",
+      bio: "Web Developer and Front-End Developer | Backend Developer with professional experience building and maintaining responsive websites using WordPress, Divi, Elementor, HTML, CSS, JavaScript, jQuery, PHP, and MySQL. Experienced in reusable front-end components, responsive troubleshooting, accessibility, page speed, Core Web Vitals, QA, website customization, and client collaboration.",
       email: "all.pmanayan@gmail.com",
       phone: "0949-870-5440",
       location: "Argao, Cebu, Philippines",
@@ -165,7 +165,7 @@ async function main() {
     data: [
       {
         company: "AD-IOS Digital Marketing Co.",
-        role: "Front-End Developer (Part-time)",
+        role: "Front-End Developer | Backend Developer (Part-time)",
         startDate: "Oct 2025",
         endDate: "Sept 2026",
         location: "Remote",
@@ -183,7 +183,7 @@ async function main() {
       },
       {
         company: "AD-IOS Digital Marketing Co.",
-        role: "Front-End Developer (Full-time)",
+        role: "Front-End Developer | Backend Developer (Full-time)",
         startDate: "July 2021",
         endDate: "July 2024",
         location: "Hybrid",

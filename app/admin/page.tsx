@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { TechnologyField } from "@/components/technology-field";
+import { groupSkills, skillCategoryHref } from "@/lib/skills";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
@@ -7,13 +10,11 @@ import {
   saveProject,
   saveService,
   saveSettings,
-  saveSkill,
   saveTestimonial,
   saveEducation,
   deleteProject,
   deleteExperience,
   deleteService,
-  deleteSkill,
   deleteTestimonial,
   deleteEducation,
   markMessage,
@@ -109,6 +110,16 @@ export default async function AdminPage() {
           </form>
         </div>
 
+        <section className="glass mt-8 rounded-[26px] p-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div><h2 className="text-xl">Skills by category</h2><p className="mt-2 text-sm text-white/50">Manage each part of your toolkit in its own workspace.</p></div>
+            <Link href="/admin/skills" className="rounded-full border border-white/20 px-5 py-3 text-sm">Manage skills →</Link>
+          </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {groupSkills(skills).map(group => <Link key={group.category} href={skillCategoryHref(group.category)} className="rounded-2xl border border-white/10 p-4 transition hover:border-[#d7bd7d]/50"><span className="block break-words text-sm">{group.category}</span><span className="mt-2 block text-xs text-white/40">{group.skills.length} skills →</span></Link>)}
+          </div>
+        </section>
+
         <section className="mt-10 grid gap-6 lg:grid-cols-2">
           <div className="glass rounded-[26px] p-6">
             <h2 className="text-lg">Site settings</h2>
@@ -192,7 +203,7 @@ export default async function AdminPage() {
                       name="category"
                       defaultValue={project.category}
                     />
-                    <LabeledField label="Technology" name="tech" defaultValue={project.tech} />
+                    <TechnologyField defaultValue={project.tech} />
                     <LabeledField
                       label="Live URL"
                       name="liveUrl"
@@ -265,7 +276,7 @@ export default async function AdminPage() {
                   <Field name="title" placeholder="Title" />
                   <Field name="slug" placeholder="slug" />
                   <Field name="category" placeholder="Category" />
-                  <Field name="tech" placeholder="Next.js, TypeScript" />
+                  <TechnologyField />
                   <Field name="liveUrl" placeholder="Live URL" />
                   <Field name="githubUrl" placeholder="GitHub URL" />
                   <Field name="sortOrder" type="number" defaultValue={99} />
@@ -293,18 +304,6 @@ export default async function AdminPage() {
         </section>
 
         <section className="mt-6 grid gap-6 lg:grid-cols-2">
-          <AdminCollection
-            title="Skills"
-            items={skills}
-            newAction={saveSkill}
-            deleteAction={deleteSkill}
-            fields={[
-              ["name", "name"],
-              ["category", "category"],
-              ["icon", "icon"],
-              ["sortOrder", "sortOrder", "number"],
-            ]}
-          />
           <AdminCollection
             title="Services"
             items={services}

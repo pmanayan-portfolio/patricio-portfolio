@@ -2,6 +2,8 @@
 
 This copy is prepared for a serverless production deployment.
 
+**Existing deployment:** follow UPDATE-GUIDE.md. This update needs no schema changes or reseeding. The setup instructions below are for a new deployment.
+
 ## Architecture
 
 - Next.js / React / TypeScript -> Vercel
@@ -64,7 +66,10 @@ npm run dev
 Test:
 
 - `/`
-- `/portfolio`
+- `/#portfolio` (all projects)
+- `/portfolio` (redirects to the homepage collection)
+- `/portfolio/[slug]` (existing project detail pages)
+- `/admin/skills` (category workspaces)
 - `/login`
 - `/admin`
 - Creating/updating projects
