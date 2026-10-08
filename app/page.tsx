@@ -65,9 +65,9 @@ export default async function Home() {
             </Reveal>
             <Reveal delay={0.08}>
               <h1 className="text-[clamp(4rem,11vw,9.8rem)] font-medium leading-[.82] tracking-[-.065em]">
-                Digital
+                Patricio
                 <br />
-                <span className="gold-text">craft.</span>
+                <span className="gold-text">Manayan Jr.</span>
               </h1>
             </Reveal>
             <div className="mt-9 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
@@ -184,7 +184,7 @@ export default async function Home() {
           <Reveal>
             <div className="mb-10">
               <p className="eyebrow mb-4">03 — Portfolio</p>
-              <h2 className="text-4xl tracking-[-.04em] md:text-5xl">Ideas brought to life.</h2>
+              <h2 className="text-4xl tracking-[-.04em] md:text-5xl">Explore my portfolio.</h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-white/50">
                 Explore my work by category. Open a project for its full story, technology stack, and the work behind it.
               </p>
