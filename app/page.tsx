@@ -64,9 +64,9 @@ export default async function Home() {
             </Reveal>
             <Reveal delay={0.08}>
               <h1 className="text-[clamp(4rem,11vw,9.8rem)] font-medium leading-[.82] tracking-[-.065em]">
-                Digital
+                Patricio
                 <br />
-                <span className="gold-text">craft.</span>
+                <span className="gold-text">Manayan Jr.</span>
               </h1>
             </Reveal>
             <div className="mt-9 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
